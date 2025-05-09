@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://d4dxpt8vq8o15"]
+
+[ext_resource type="Script" uid="uid://bpotpydcbs2ef" path="res://mobile_joystick.gd" id="1_ls22c"]
+[ext_resource type="Texture2D" uid="uid://cwnge1dcrtu02" path="res://Frame 2-2.png" id="2_pgcst"]
+[ext_resource type="Texture2D" uid="uid://yn5t2ktkox6n" path="res://Ellipse 4.png" id="3_pgcst"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ls22c"]
+radius = 84.0
+
+[node name="Mobile_Joystick" type="CanvasLayer"]
+script = ExtResource("1_ls22c")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2(237, 854)
+texture_normal = ExtResource("2_pgcst")
+shape = SubResource("CircleShape2D_ls22c")
+visibility_mode = 1
+
+[node name="FireButton" type="TouchScreenButton" parent="."]
+position = Vector2(518, 1026)
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("3_pgcst")
+visibility_mode = 1

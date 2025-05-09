@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://bq5vwqx7qrhgf"]
+
+[ext_resource type="Script" uid="uid://dysqofamw85nd" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="PackedScene" uid="uid://bdfhpjmplkb01" path="res://bullet.tscn" id="2_hqtel"]
+[ext_resource type="Texture2D" uid="uid://ck3w327vnbutn" path="res://assets-2/SportsCar-Sheet.png" id="3_hqtel"]
+[ext_resource type="PackedScene" uid="uid://ddmhxijmnbckv" path="res://explosion.tscn" id="4_hqtel"]
+[ext_resource type="Texture2D" uid="uid://bv1qp3fmvvdq8" path="res://Icon29_09.png" id="4_sweqy"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqtel"]
+radius = 26.0
+height = 122.0
+
+[node name="Player" type="RigidBody2D"]
+contact_monitor = true
+max_contacts_reported = 1
+linear_damp = 1.0
+angular_damp = 5.0
+script = ExtResource("1_onrkg")
+spin_power = 20000
+bullet_scene = ExtResource("2_hqtel")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("3_hqtel")
+hframes = 7
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(-6, -1)
+rotation = 0.792229
+scale = Vector2(1.91823, 1.91823)
+texture = ExtResource("4_sweqy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_hqtel")
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(50, 0)
+
+[node name="GunCooldown" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="Explosion" parent="." instance=ExtResource("4_hqtel")]
+visible = false
+
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="GunCooldown" to="." method="_on_gun_cooldown_timeout"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]
