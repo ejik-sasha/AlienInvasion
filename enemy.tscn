@@ -1,0 +1,110 @@
+[gd_scene load_steps=12 format=3 uid="uid://bae6n7px7fc5"]
+
+[ext_resource type="Texture2D" uid="uid://cdfjl4sdkpgoa" path="res://assets-2/SciFi_DungeonTileset16x16_0x72Like.png" id="1_4gyqm"]
+[ext_resource type="Script" uid="uid://dj6j48tervgdq" path="res://enemy.gd" id="1_iifgy"]
+[ext_resource type="PackedScene" uid="uid://dxdtsos2qsb1l" path="res://enemy_bullet.tscn" id="2_epg4t"]
+[ext_resource type="PackedScene" uid="uid://d23kaaps81f5k" path="res://enemy_paths.tscn" id="2_qi2p4"]
+[ext_resource type="PackedScene" uid="uid://mug3g3ehyl5l" path="res://coin.tscn" id="3_3yqyl"]
+[ext_resource type="PackedScene" uid="uid://ddmhxijmnbckv" path="res://explosion.tscn" id="4_epg4t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4gyqm"]
+radius = 60.0
+
+[sub_resource type="Animation" id="Animation_iifgy"]
+resource_name = "idle"
+length = 0.26
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_epg4t"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 0, 1, 0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3yqyl"]
+resource_name = "flash"
+length = 0.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.08, 0.12, 0.16, 0.2, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.0909412, 0.0594632, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3yqyl"]
+_data = {
+&"RESET": SubResource("Animation_epg4t"),
+&"flash": SubResource("Animation_3yqyl"),
+&"idle": SubResource("Animation_iifgy")
+}
+
+[node name="Enemy" type="Area2D" groups=["Enemies"]]
+script = ExtResource("1_iifgy")
+bullet_scene = ExtResource("2_epg4t")
+coin_scene = ExtResource("3_3yqyl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(4, 4)
+texture = ExtResource("1_4gyqm")
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4gyqm")
+
+[node name="EnemyPaths" parent="." instance=ExtResource("2_qi2p4")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+&"": SubResource("AnimationLibrary_3yqyl")
+}
+
+[node name="Explosion" parent="." instance=ExtResource("4_epg4t")]
+visible = false
+
+[node name="GunCooldown" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="GunCooldown" to="." method="_on_gun_cooldown_timeout"]

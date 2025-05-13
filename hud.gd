@@ -4,6 +4,8 @@ signal start_game
 @onready var score_label = $MarginContainer/HBoxContainer/ScoreLabel
 @onready var message = $VBoxContainer/Message
 @onready var start_button = $VBoxContainer/StartButton
+@onready var shop_button = $VBoxContainer/ShopButton
+@onready var coin_label = $CoinLabel
 
 func show_message(text):
 	message.text = text
@@ -21,10 +23,14 @@ func game_over():
 	show_message("Game Over")
 	await $Timer.timeout
 	start_button.show()
+	shop_button.show()
+	coin_label.hide()
 	 
 
 func _on_start_button_pressed():
 	start_button.hide()
+	shop_button.hide()
+	coin_label.show()
 	start_game.emit()
 
 

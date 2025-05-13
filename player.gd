@@ -14,6 +14,14 @@ signal dead
 var reset_pos = false
 var lives = 0: set = set_lives
 var joystick_vector = Vector2.ZERO
+var hit_count = 0
+const HITS_TO_LOSE_LIFE = 5
+var coins = 0
+signal coins_changed
+signal skin_changed
+var default = "Icon29_02"
+var owned_skins: Array = [default]
+var current_skin: String = default
 
 func _ready():
 	$Sprite2D.hide()
@@ -24,7 +32,8 @@ func _ready():
 	joystick.connect("use_move_vector", Callable(self, "_on_joystick_input"))
 	var fire_button = get_tree().get_root().get_node("Main/Mobile_Joystick/FireButton")
 	fire_button.pressed.connect(self._on_fire_button_pressed)
-
+	connect("area_entered", Callable(self, "_on_area_entered"))
+	apply_skin()
 
 func change_state(new_state):
 	match new_state:
@@ -108,6 +117,7 @@ func set_lives(value):
 func reset():
 	reset_pos = true
 	$Sprite2D.show()
+	$Sprite2D2.show()
 	lives = 3
 	change_state(ALIVE)
 
@@ -133,3 +143,50 @@ func _on_joystick_input(vector):
 func _on_fire_button_pressed():
 	if can_shoot:
 		shoot()
+
+func take_hit():
+	hit_count += 1
+	$AnimationPlayer.play("flash")
+	if hit_count >= HITS_TO_LOSE_LIFE:
+		explode()
+		hit_count = 0
+		lives -= 1
+		if lives > 0:
+			await $AnimationPlayer.animation_finished
+			change_state(INVULNERABLE)
+		else: 
+			change_state(DEAD)
+
+func _on_area_entered(area):
+	if area.is_in_group("Enemies"):
+		area.explode()
+		lives -= 1
+		explode()
+
+func collect_coin():
+	coins += 1
+	coins_changed.emit(coins)
+
+func apply_skin():
+	var texture_path = "res://skins/%s.png" % current_skin
+	var texture = load(texture_path)
+	$Sprite2D2.texture = texture
+
+func save_progress():
+	var data = {
+		"coins": coins,
+		"owned_skins": owned_skins,
+		"current_skin": current_skin
+	}
+	var file = FileAccess.open("user://save.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify(data))
+
+func load_progress():
+	if not FileAccess.file_exists("user://save.json"):
+		return
+	var file = FileAccess.open("user://save.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	if data:
+		coins = data.coins
+		owned_skins = data.owned_skins
+		current_skin = data.current_skin
