@@ -27,13 +27,17 @@ point_count = 7
 [node name="EnemyPaths" type="Node"]
 
 [node name="Path2D" type="Path2D" parent="."]
+scale = Vector2(1.84, 2.04)
 curve = SubResource("Curve2D_gxig3")
 
 [node name="Path2D2" type="Path2D" parent="."]
+scale = Vector2(1.84, 2.04)
 curve = SubResource("Curve2D_emdvi")
 
 [node name="Path2D3" type="Path2D" parent="."]
+scale = Vector2(1.84, 2.04)
 curve = SubResource("Curve2D_sxqqp")
 
 [node name="Path2D4" type="Path2D" parent="."]
+scale = Vector2(1.84, 2.04)
 curve = SubResource("Curve2D_i6d2l")

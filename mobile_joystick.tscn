@@ -11,14 +11,15 @@ radius = 84.0
 script = ExtResource("1_ls22c")
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="."]
-position = Vector2(237, 854)
+position = Vector2(372, 1777)
+scale = Vector2(2.04, 2.04)
 texture_normal = ExtResource("2_pgcst")
 shape = SubResource("CircleShape2D_ls22c")
 visibility_mode = 1
 
 [node name="FireButton" type="TouchScreenButton" parent="."]
-position = Vector2(518, 1026)
+position = Vector2(991, 2016)
 rotation = 1.5708
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.9, 0.9)
 texture_normal = ExtResource("3_pgcst")
 visibility_mode = 1

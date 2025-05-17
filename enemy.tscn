@@ -8,25 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ddmhxijmnbckv" path="res://explosion.tscn" id="4_epg4t"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4gyqm"]
-radius = 60.0
-
-[sub_resource type="Animation" id="Animation_iifgy"]
-resource_name = "idle"
-length = 0.26
-loop_mode = 1
-step = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0, 1]
-}
+radius = 130.035
 
 [sub_resource type="Animation" id="Animation_epg4t"]
 tracks/0/type = "value"
@@ -71,6 +53,24 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 0.0909412, 0.0594632, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_iifgy"]
+resource_name = "idle"
+length = 0.26
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 1]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3yqyl"]
 _data = {
 &"RESET": SubResource("Animation_epg4t"),
@@ -84,7 +84,7 @@ bullet_scene = ExtResource("2_epg4t")
 coin_scene = ExtResource("3_3yqyl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(4, 4)
+scale = Vector2(8, 8)
 texture = ExtResource("1_4gyqm")
 vframes = 2
 

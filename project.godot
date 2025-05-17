@@ -13,12 +13,14 @@ config_version=5
 config/name="AlienInvasion"
 run/main_scene="uid://dnlufqd7apg12"
 config/features=PackedStringArray("4.4", "Mobile")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+config/icon="uid://lhy1sf13tbno"
 
 [display]
 
-window/size/viewport_width=720
-window/size/viewport_height=1280
+window/size/viewport_width=1179
+window/size/viewport_height=2556
+window/handheld/orientation=5
 
 [input]
 
@@ -63,3 +65,4 @@ pointing/emulate_touch_from_mouse=true
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

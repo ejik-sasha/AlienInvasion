@@ -4,15 +4,15 @@
 [ext_resource type="Texture2D" uid="uid://dc3wpumi22mnw" path="res://Green Effect and Bullet 16x16.png" id="2_mgp66"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2b2rl"]
-radius = 5.0
-height = 16.0
+radius = 7.0
+height = 22.0
 
 [node name="EnemyBullet" type="Area2D"]
 script = ExtResource("1_gl7bs")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = -1.5708
-scale = Vector2(0.9, 0.9)
+scale = Vector2(1.4, 1.4)
 texture = ExtResource("2_mgp66")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

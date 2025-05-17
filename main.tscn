@@ -22,14 +22,16 @@ rock_scene = ExtResource("2_1bvp3")
 enemy_scene = ExtResource("7_272bh")
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(-576, -48)
-scale = Vector2(2.67188, 2.67188)
+position = Vector2(-1025, -42)
+scale = Vector2(5.16016, 5.16016)
 texture = ExtResource("3_lquwl")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
 
 [node name="RockPath" type="Path2D" parent="."]
+position = Vector2(-20.9174, -10.9706)
+scale = Vector2(0.635331, 2.37132)
 curve = SubResource("Curve2D_1bvp3")
 
 [node name="RockSpawn" type="PathFollow2D" parent="RockPath"]
